@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #1f2933;
+}
+
+.container {
+  width: min(1100px, 94%);
+  margin: 30px auto;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+h1, h2 {
+  margin: 0 0 12px;
+}
+
+p {
+  margin: 6px 0;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.expense-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.wide {
+  grid-column: span 4;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bcccdc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #1f6feb;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+button.secondary {
+  background: #52606d;
+}
+
+button.danger {
+  background: #d64545;
+}
+
+button.small {
+  padding: 7px 9px;
+  font-size: 0.85rem;
+  margin-right: 6px;
+}
+
+.row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+#message {
+  min-height: 22px;
+  font-weight: bold;
+}
+
+.success {
+  color: #14804a;
+}
+
+.error {
+  color: #b42318;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  border-bottom: 1px solid #d9e2ec;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #f0f4f8;
+}
+
+@media (max-width: 850px) {
+  .grid,
+  .expense-form {
+    grid-template-columns: 1fr;
+  }
+
+  .wide {
+    grid-column: span 1;
+  }
+
+  .row-between {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

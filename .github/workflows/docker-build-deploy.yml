@@ -1,0 +1,13 @@
+name: CD - build and deploy to Azure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deployment-placeholder:
+    name: Deployment placeholder
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deployment not configured yet
+        run: echo "Deployment will be configured after Azure resources are created."

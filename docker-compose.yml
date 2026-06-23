@@ -1,0 +1,76 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: expense-postgres
+    environment:
+      POSTGRES_USER: expense_user
+      POSTGRES_PASSWORD: expense_password
+      POSTGRES_DB: expense_tracker_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U expense_user -d expense_tracker_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - expense-network
+
+  auth-service:
+    build:
+      context: ./auth-service
+    container_name: expense-auth-service
+    environment:
+      DATABASE_URL: postgresql+psycopg2://expense_user:expense_password@postgres:5432/expense_tracker_db
+      JWT_SECRET_KEY: change-this-secret-before-deployment
+      DB_INIT_ATTEMPTS: 30
+      DB_INIT_DELAY: 2
+    ports:
+      - "5001:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - expense-network
+
+  expense-service:
+    build:
+      context: ./expense-service
+    container_name: expense-expense-service
+    environment:
+      DATABASE_URL: postgresql+psycopg2://expense_user:expense_password@postgres:5432/expense_tracker_db
+      AUTH_SERVICE_URL: http://auth-service:5000
+      DB_INIT_ATTEMPTS: 30
+      DB_INIT_DELAY: 2
+    ports:
+      - "5002:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+    networks:
+      - expense-network
+
+  web:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: expense-web
+    environment:
+      AUTH_SERVICE_URL: http://auth-service:5000
+      EXPENSE_SERVICE_URL: http://expense-service:5000
+    ports:
+      - "8080:80"
+    depends_on:
+      - auth-service
+      - expense-service
+    networks:
+      - expense-network
+
+volumes:
+  postgres_data:
+
+networks:
+  expense-network:
+    driver: bridge

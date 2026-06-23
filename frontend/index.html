@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Expense Tracker</h1>
+      <p>Aplikacja do zarządzania wydatkami.</p>
+    </header>
+
+    <section id="auth-section" class="card grid">
+      <div>
+        <h2>Rejestracja</h2>
+        <label>Login</label>
+        <input id="register-username" type="text" placeholder="np. student" />
+        <label>Hasło</label>
+        <input id="register-password" type="password" placeholder="min. 4 znaki" />
+        <button onclick="registerUser()">Zarejestruj</button>
+      </div>
+
+      <div>
+        <h2>Logowanie</h2>
+        <label>Login</label>
+        <input id="login-username" type="text" placeholder="np. student" />
+        <label>Hasło</label>
+        <input id="login-password" type="password" placeholder="hasło" />
+        <button onclick="loginUser()">Zaloguj</button>
+      </div>
+    </section>
+
+    <section id="app-section" class="hidden">
+      <div class="card">
+        <div class="row-between">
+          <div>
+            <h2>Panel użytkownika</h2>
+            <p id="logged-user"></p>
+          </div>
+          <button class="secondary" onclick="logoutUser()">Wyloguj</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <h2>Dodaj wydatek</h2>
+        <div class="expense-form">
+          <div>
+            <label>Nazwa</label>
+            <input id="expense-title" type="text" placeholder="np. Bilet miesięczny" />
+          </div>
+          <div>
+            <label>Kwota</label>
+            <input id="expense-amount" type="number" step="0.01" placeholder="np. 120.00" />
+          </div>
+          <div>
+            <label>Kategoria</label>
+            <input id="expense-category" type="text" placeholder="np. Transport" />
+          </div>
+          <div>
+            <label>Data</label>
+            <input id="expense-date" type="date" />
+          </div>
+          <div class="wide">
+            <label>Opis</label>
+            <input id="expense-description" type="text" placeholder="opcjonalnie" />
+          </div>
+        </div>
+        <button onclick="createExpense()">Dodaj wydatek</button>
+      </section>
+
+      <section class="card">
+        <div class="row-between">
+          <h2>Lista wydatków</h2>
+          <button class="secondary" onclick="loadExpenses()">Odśwież</button>
+        </div>
+        <p id="summary"></p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Nazwa</th>
+                <th>Kwota</th>
+                <th>Kategoria</th>
+                <th>Data</th>
+                <th>Opis</th>
+                <th>Akcje</th>
+              </tr>
+            </thead>
+            <tbody id="expenses-table"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <p id="message"></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
